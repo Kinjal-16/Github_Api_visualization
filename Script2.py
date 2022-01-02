@@ -1,4 +1,6 @@
 import json
+
+import pymongo
 import requests
 from pandas.io.json import json_normalize
 import pandas as pd
@@ -9,7 +11,10 @@ github_api = "https://api.github.com"
 session = requests.Session()
 session.auth = (config.GITHUB_USERNAME, config.GITHUB_TOKEN)
 
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
 
+db = client.classDB
 def pull_Requests(repo, owner, api):
     pullR = []
     next = True
@@ -29,26 +34,20 @@ def pull_Requests(repo, owner, api):
         return pullR
 
 pullCal = []
-repos = pd.read_csv('data/repo.csv')
-for i in repos['Org']:
-    org = i
-if os.path.exists('data/PRCount.csv'):
-    os.remove('data/PRCount.csv')
-for i in repos['repo']:
-    pullR = pull_Requests(i, org, github_api)
-    if pullR == []:
-        continue
+for i in db.repos.find():
+    org = i['Org']
+
+for i in db.repos.find():
+
     try:
-        pullR = pull_Requests(i, org, github_api)
+        pullR = pull_Requests(i['repo'], org, github_api)
+        if pullR == []:
+            continue
         pullCal = pullCal + pullR
     except:
-        print("Repo is read only. It's now deleted.")
+        print("Repo is read only. Skipping it")
 
-        repos_with_index = repos.set_index("repo")
-
-        repos2 = repos_with_index.drop(i, axis=0)
-        repos2.to_csv('data/repo.csv')
-json_normalize(pullCal).to_csv('data/PRCount.csv')
+db.pullR.insert_many((pullCal))
 
 
 

@@ -1,5 +1,6 @@
 import json
 
+import pymongo
 import requests
 from pandas.io.json import json_normalize
 
@@ -14,6 +15,11 @@ url = github_api + '/repos/apache/spark/commits'
 commits = gh_session.get(url=url)
 commits_json = commits.json()
 flag = 0
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
+
+# Create a database
+db = client.classDB
 
 def branches_of_repo(repo, owner, api):
     branches = []
@@ -36,20 +42,18 @@ def branches_of_repo(repo, owner, api):
     return branches
 
 branchCount = []
-repos = pd.read_csv('data/repo.csv')
-for i in repos['Org']:
-    org = i
-for i in repos['repo']:
+for i in db.repos.find():
+    org = i['Org']
+for i in db.repos.find():
 
-        branches = (branches_of_repo(i, org, github_api))
+        branches = (branches_of_repo(i['repo'], org, github_api))
         if(flag == 0):
             bC = {"Repository": i, "No_of_branches": len(branches)}
             print(bC)
             branchCount = branchCount + [bC]
 
-branchCount = json_normalize(branchCount)
 
-branchCount.to_csv('data/branchCount.csv')
+db.branches.insert_many(branchCount)
 
 
 

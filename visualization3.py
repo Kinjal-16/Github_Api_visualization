@@ -1,10 +1,18 @@
 import pandas as pd
 import matplotlib.pyplot as pp
+import pymongo
+from pandas.io.json import json_normalize
 
-pullR = pd.read_csv('data/PRCount.csv',on_bad_lines='skip')
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
 
-pullR['URL'] = pullR.url
+# Create a database
+db = client.classDB
+pullR = json_normalize(db.pullR.find())
+
+pullR['URL'] = pullR['url']
 pullR['repo']=pullR['base.repo.name']
+
 pullR['head_repo_size'] = pullR['head.repo.size']
 pullR['base_repo_size']=pullR['base.repo.size']
 pullR['PullR_Size']= ((abs(pullR['head_repo_size'] - pullR['base_repo_size']))/pullR['base_repo_size'])*100

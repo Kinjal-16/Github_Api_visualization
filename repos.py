@@ -1,6 +1,6 @@
 from github import Github  # github api access
 from pandas.io.json import json_normalize
-
+import pymongo
 import config
 
 g = Github(config.GITHUB_TOKEN)
@@ -14,6 +14,11 @@ for item in pr:
     fn = str.index('/')
     diction = [{"repo":str[(fn + 1):],"Org":str[0:fn]}]
     repo = repo + diction
-repo = json_normalize(repo)
 
-repo.to_csv('data/repo.csv')
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
+
+# Create a database
+db = client.classDB
+
+db.repos.insert_many(repo)

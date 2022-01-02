@@ -1,7 +1,15 @@
 import matplotlib.pyplot as pp
 import pandas as pd
 
-branches = pd.read_csv('data/branchCount.csv')
+import pymongo
+
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
+
+# Create a database
+db = client.classDB
+
+branches = pd.DataFrame(db.branches.find())
 
 
 branches = branches.sort_values(by = 'No_of_branches')
@@ -12,7 +20,7 @@ c=0
 x=[]
 for i in branches.Repository:
     if(c+40>=count):
-        x = x + [i]
+        x = x + [i['repo']]
     c=c+1
 
 c=0
