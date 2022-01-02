@@ -13,7 +13,7 @@ pullR=pullR[['URL','repo','head_repo_size','base_repo_size','PullR_Size']]
 
 pullR_g= pullR.groupby(["repo"])[["PullR_Size"]].mean()
 pullR_g = pullR_g.rename({'PullR_Size': 'size'})
-pullR_g = pullR_g.sort_values(by=['PullR_Size'],ascending=False)
+pullR_g = pullR_g.sort_values(by=['PullR_Size'],ascending=True)
 c=30
 x=[]
 for i in pullR_g.index:
@@ -36,7 +36,6 @@ fig = pp.gcf()
 fig.subplots_adjust(bottom=0.50)
 pp.xlabel("Repositories")
 pp.ylabel("Pull Request Size(in %)")
-fig.savefig('PR1.png', dpi=150)
-
+fig.savefig('PR2.png', dpi=150)
 pp.show()
 
