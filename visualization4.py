@@ -42,6 +42,6 @@ pp.xticks(rotation=90)
 fig = pp.gcf()
 fig.subplots_adjust(bottom=0.50)
 pp.xlabel("Repositories")
-pp.ylabel("Pull Request Size(in %)")
+pp.ylabel("Overall Pull Request Size(in %)")
 fig.savefig('PR2.png', dpi=150)
 
