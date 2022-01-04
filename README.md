@@ -7,6 +7,9 @@ Script2.py extracts the pull requests made to each repository to calculate the p
 
 All these data are stored in mongoDB whuch must be running in the background on docker(Execute the run-db.sh file to run the database).
 There are 4 python scripts for visualization using python libraries like Matplotlib and pandas that utilizes this data stored in the database.
+
 You can run all these scripts at once by executing the run.sh file.
-When the run.sh file has finished running, a python web server will host a website that displays these visualizations
+When the run.sh file has finished running, a python web server will host a website that displays these visualizations.
+
+[Please note that the config.py file has to be provided with a GitHub username and a GitHub access token to run the Scripts successfully]
 
