@@ -11,9 +11,7 @@ github_api = "https://api.github.com"
 gh_session = requests.Session()
 gh_session.auth = (config.GITHUB_USERNAME, config.GITHUB_TOKEN)
 
-url = github_api + '/repos/apache/spark/commits'
-commits = gh_session.get(url=url)
-commits_json = commits.json()
+
 flag = 0
 conn = "mongodb://localhost:27017"
 client = pymongo.MongoClient(conn)
@@ -49,7 +47,6 @@ for i in db.repos.find():
         branches = (branches_of_repo(i['repo'], org, github_api))
         if(flag == 0):
             bC = {"Repository": i, "No_of_branches": len(branches)}
-            print(bC)
             branchCount = branchCount + [bC]
 
 
