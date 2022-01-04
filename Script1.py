@@ -40,9 +40,10 @@ def branches_of_repo(repo, owner, api):
     return branches
 
 branchCount = []
+print('Fetching data from the github api')
 for i in db.repos.find():
     org = i['Org']
-    print('Fetching data from the github api')
+
 for i in db.repos.find():
     try:
         branches = (branches_of_repo(i['repo'], org, github_api))
