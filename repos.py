@@ -4,7 +4,7 @@ import pymongo
 import config
 
 g = Github(config.GITHUB_TOKEN)
-val = input("Enter the name of an organization \n")
+val = input("Enter the name of an organization (like uber)\n")
 usr = g.get_organization(val)
 pr = usr.get_repos()
 repo = []

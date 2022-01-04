@@ -46,5 +46,4 @@ pp.xlabel("Repositories")
 pp.ylabel("Pull Request Size(in %)")
 fig.savefig('PR1.png', dpi=150)
 
-pp.show()
 

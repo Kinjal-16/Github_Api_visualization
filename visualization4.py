@@ -44,5 +44,4 @@ fig.subplots_adjust(bottom=0.50)
 pp.xlabel("Repositories")
 pp.ylabel("Pull Request Size(in %)")
 fig.savefig('PR2.png', dpi=150)
-pp.show()
 

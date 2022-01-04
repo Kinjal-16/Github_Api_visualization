@@ -45,6 +45,7 @@ for i in db.repos.find():
             continue
         pullCal = pullCal + pullR
     except:
+        print (i)
         print("Repo is read only. Skipping it")
 
 db.pullR.insert_many((pullCal))

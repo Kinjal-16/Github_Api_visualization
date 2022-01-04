@@ -42,12 +42,16 @@ def branches_of_repo(repo, owner, api):
 branchCount = []
 for i in db.repos.find():
     org = i['Org']
+    print('Fetching data from the github api')
 for i in db.repos.find():
-
+    try:
         branches = (branches_of_repo(i['repo'], org, github_api))
         if(flag == 0):
             bC = {"Repository": i, "No_of_branches": len(branches)}
             branchCount = branchCount + [bC]
+    except:
+        print(i)
+        print("Repo is read only. Skipping it")
 
 
 db.branches.insert_many(branchCount)
