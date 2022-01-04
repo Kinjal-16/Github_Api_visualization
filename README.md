@@ -5,7 +5,7 @@ repos.py extracts the repositories of an organization chosen by the user.
 Script1.py extracts the branches in these repositories and counts the number of branches in each of them.
 Script2.py extracts the pull requests made to each repository to calculate the pull request size.
 
-All these data are stored in mongoDB whuch must be running in the background on docker(Execute the run-db.sh file to run the database).
+All these data are stored in mongoDB which must be running in the background on docker(Execute the run-db.sh file to run the database).
 There are 4 python scripts for visualization using python libraries like Matplotlib and pandas that utilizes this data stored in the database.
 
 You can run all these scripts at once by executing the run.sh file.
